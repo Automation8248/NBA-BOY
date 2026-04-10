@@ -11,7 +11,7 @@ TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 WEBHOOK_URL = os.environ.get("WEBHOOK_URL")
 
-GITHUB_REPO = "Automation8248/Dark-Discipline" 
+GITHUB_REPO = "Automation8248/NBA-BOY" 
 BRANCH_NAME = "main"
 
 # --- DATA GRID (NBA & USA Hoops Topic Only) ---
