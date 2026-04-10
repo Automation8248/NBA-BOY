@@ -1,0 +1,40 @@
+name: Daily Video Automation
+
+on:
+  schedule:
+    # India (IST): 4:46 AM (Today)
+    # New York (EST): 6:16 PM (Yesterday)
+    # UTC (GitHub Time): 11:16 PM (Yesterday)
+    - cron: '16 23 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-automation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Execute Script
+        env:
+          # Yahan name change kiya hai taaki Python script se match kare
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }} 
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: python main.py
+
+      - name: Save Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -u
+          git commit -m "System: Processed video removed" || exit 0
+          git push
